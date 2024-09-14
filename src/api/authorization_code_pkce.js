@@ -7,12 +7,12 @@
  * https://developer.spotify.com/documentation/web-api/tutorials/code-pkce-flow
  */
 
-const clientId = process.env.SPOTIFY_CLIENT_ID; // your clientId
+const clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID; // your clientId
 const redirectUrl = 'http://localhost:3000/';        // your redirect URL - must be localhost URL and/or HTTPS
 
 const authorizationEndpoint = "https://accounts.spotify.com/authorize";
 const tokenEndpoint = "https://accounts.spotify.com/api/token";
-const scope = 'user-read-private user-read-email';
+const scope = 'user-read-private user-read-email playlist-read-private user-library-read';
 
 // Data structure that manages the current active token, caching it in localStorage
 const currentToken = {
@@ -136,4 +136,13 @@ export async function getUserData() {
   });
 
   return await response.json();
+}
+
+export async function getCurrentUsersPlaylists() {
+    const response = await fetch("https://api.spotify.com/v1/me/playlists?offset=0&limit=20", {
+        method: 'GET',
+        headers: { 'Authorization': 'Bearer ' + currentToken.access_token },
+      });
+    
+      return await response.json();
 }
