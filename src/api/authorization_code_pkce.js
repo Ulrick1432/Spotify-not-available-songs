@@ -146,3 +146,26 @@ export async function getCurrentUsersPlaylists() {
     
       return await response.json();
 }
+
+export async function getPlaylistItems(playlist_id, totalTracksInPlaylist) {
+  try {
+    const response = await fetch(`https://api.spotify.com/v1/playlists/${playlist_id}/tracks?offset=0&limit=${totalTracksInPlaylist}`, {
+      method: 'GET',
+      headers: { 'Authorization': 'Bearer ' + currentToken.access_token },
+    });
+    return await response.json();
+
+  } catch(err) {
+    console.error('Error getting playlist items' + err);
+  }
+}
+
+// limits Maximin = 50
+export async function getUsersSavedTracks(limit = 50, offset = 0) {
+  const response = await fetch(`https://api.spotify.com/v1/me/tracks?offset=${offset}&limit=${limit}`, {
+    method: 'GET',
+    headers: { 'Authorization': 'Bearer ' + currentToken.access_token },
+  })
+
+  return await response.json();
+}
