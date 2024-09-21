@@ -9,9 +9,12 @@ export const tracksSlice = createSlice({
     addTracks: (state, action) => {
       state.value.push(...action.payload);
     },
+    replaceInitialState: (state, action) => {
+      state.value = action.payload;
+    }
   }
 });
 
-export const { addTracks } = tracksSlice.actions;
+export const { addTracks, replaceInitialState } = tracksSlice.actions;
 
 export default tracksSlice.reducer;

@@ -1,7 +1,7 @@
 import './lists.css';
 import { getPlaylistItems, getUsersSavedTracks } from '../../api/authorization_code_pkce';
 import { useDispatch } from 'react-redux';
-import { addTracks } from '../../utils/tracks';
+import { replaceInitialState } from '../../utils/tracks';
 
 const ListOfPlaylists = ({ headerText, nameOfItem, data = null, loggedIn, }) => {
   const dispatch = useDispatch();
@@ -9,7 +9,7 @@ const ListOfPlaylists = ({ headerText, nameOfItem, data = null, loggedIn, }) => 
   const handleClickPlaylists = async (playlist_id, totalTracksInPlaylist) => {
     console.log('Jeg har klikket på en playlist');
     const response = await getPlaylistItems(playlist_id, totalTracksInPlaylist);
-    dispatch(addTracks(response.items));
+    dispatch(replaceInitialState(response.items));
   };
 
   const handleClickLikedSongs = async () => {
@@ -56,7 +56,7 @@ const ListOfPlaylists = ({ headerText, nameOfItem, data = null, loggedIn, }) => 
       
     } while (totalLikedSongs !== offset);
 
-    dispatch(addTracks(tracksToKeepTrackOf));
+    dispatch(replaceInitialState(tracksToKeepTrackOf));
   };
   
   return (

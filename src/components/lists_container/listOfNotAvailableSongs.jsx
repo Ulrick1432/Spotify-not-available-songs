@@ -8,10 +8,19 @@ const ListOfNotAvailableSongs = ({ headerText, loggedIn }) => {
   const [notAvailableSongs, setNotAvailableSongs] = useState([]);
 
   const savedTracks = useSelector(state => state.tracks.value);
+
+  // Set tracks only if savedTracks.items exists
+  useEffect(() => {
+    if (savedTracks.length > 0 && Array.isArray(savedTracks)) {
+      setTracks(savedTracks);
+    } else {
+      console.warn('savedTracks.items is undefined or not an array');
+    }
+  }, [savedTracks]);
+  
   console.log(`This is savedTracks = ${savedTracks}`);
 
   useEffect(() => {
-    console.log('Tracks updated:', tracks);
     if (tracks.length > 0) {
       const checkTracksAvailability = () => {
         let notAvailableTracks = [];
@@ -37,7 +46,7 @@ const ListOfNotAvailableSongs = ({ headerText, loggedIn }) => {
     <div className='container'>
       <h2 className='header-text'>{headerText}</h2>
       <div className='items-container'>
-        {notAvailableSongs.length > 0 && loggedIn ? (
+        {Array.isArray(notAvailableSongs) && notAvailableSongs.length > 0 && loggedIn ? (
           notAvailableSongs.map((trackName, index) => (
             <button
               key={index}
