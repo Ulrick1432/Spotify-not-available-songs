@@ -11,15 +11,13 @@ const ListOfNotAvailableSongs = ({ headerText, loggedIn }) => {
 
   // Set tracks only if savedTracks.items exists
   useEffect(() => {
-    if (savedTracks.length > 0 && Array.isArray(savedTracks)) {
+    if (savedTracks && Array.isArray(savedTracks)) {
       setTracks(savedTracks);
     } else {
       console.warn('savedTracks.items is undefined or not an array');
     }
   }, [savedTracks]);
   
-  console.log(`This is savedTracks = ${savedTracks}`);
-
   useEffect(() => {
     if (tracks.length > 0) {
       const checkTracksAvailability = () => {
@@ -37,7 +35,7 @@ const ListOfNotAvailableSongs = ({ headerText, loggedIn }) => {
       };
   
       checkTracksAvailability();
-    } else {
+    } else if (loggedIn) {
       console.log('Tracks array is empty, skipping availability check.');
     }
   }, [tracks]);

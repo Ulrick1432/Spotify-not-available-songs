@@ -50,7 +50,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-      {loggedIn === null ? <button onClick={ () => handleClickLogin() }>Spotify login</button> :
+      {loggedIn === false || loggedIn === null ? <button onClick={ () => handleClickLogin() }>Spotify login</button> :
       <button onClick={() => handleClickLogUd()}>log ud</button>}
       </header>
       <h1>Have you been getting “This track is currently not available in your country”
