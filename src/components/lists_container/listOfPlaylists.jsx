@@ -3,7 +3,7 @@ import { getPlaylistItems, getUsersSavedTracks } from '../../api/authorization_c
 import { useDispatch } from 'react-redux';
 import { replaceInitialState } from '../../utils/tracks';
 
-const ListOfPlaylists = ({ headerText, nameOfItem, data = null, loggedIn, }) => {
+const ListOfPlaylists = ({ headerText, data = null, loggedIn, }) => {
   const dispatch = useDispatch();
 
   const handleClickPlaylists = async (playlist_id, totalTracksInPlaylist) => {
@@ -75,7 +75,10 @@ const ListOfPlaylists = ({ headerText, nameOfItem, data = null, loggedIn, }) => 
             </button>
           ))
         ) : (
-          <button className='button-item'>{nameOfItem}</button>
+          <>
+            <h1>No playlists available</h1>
+            <h1>Login to get spotify playlists</h1>
+          </>
         )}
       </div>
     </div>

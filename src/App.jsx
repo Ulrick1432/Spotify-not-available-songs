@@ -1,6 +1,7 @@
 import './App.css';
 import { useEffect, useState } from 'react';
-import { redirectToSpotifyAuthorize, getCurrentUsersPlaylists, getUserData, getUsersSavedTracks } from './api/authorization_code_pkce';
+import { redirectToSpotifyAuthorize, getCurrentUsersPlaylists, getUserData } from './api/authorization_code_pkce';
+import { setTokenRefreshTimeout } from './api/spotifyToken';
 import ListOfPlaylists from './components/lists_container/listOfPlaylists';
 import ListOfNotAvailableSongs from './components/lists_container/listOfNotAvailableSongs';
 
@@ -46,6 +47,16 @@ function App() {
     getPlaylists()
   
   }, [loggedIn]);
+
+  useEffect(() => {
+
+    const tokenRefreshTimeout = () => {
+      if (loggedIn) {
+        setTokenRefreshTimeout();
+      }
+    }
+    tokenRefreshTimeout();
+  }, [loggedIn])
   
   return (
     <div className="App">
@@ -56,7 +67,7 @@ function App() {
       <h1>Have you been getting “This track is currently not available in your country”
       If you have a playlist with songs that are no longer available u can find the songs here</h1>
       <div className='lists-container'>
-        <ListOfPlaylists headerText={"Your playlists"} nameOfItem={"Item 1"} data={userPlaylists} loggedIn={loggedIn}/>
+        <ListOfPlaylists headerText={"Your playlists"} data={userPlaylists} loggedIn={loggedIn}/>
         <ListOfNotAvailableSongs headerText={"Not available songs"} loggedIn={loggedIn} />
       </div>
       <footer></footer>

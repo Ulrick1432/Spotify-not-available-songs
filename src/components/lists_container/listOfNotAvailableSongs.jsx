@@ -54,7 +54,10 @@ const ListOfNotAvailableSongs = ({ headerText, loggedIn }) => {
             </button>
           ))
         ) : (
-          <p>No unavailable songs to display.</p>
+          <>
+            <h1>No unavailable songs</h1>
+            <h1>Select a playlist</h1>
+          </>
         )}
       </div>
     </div>
