@@ -1,3 +1,5 @@
+import { isTokenValid } from "./spotifyToken";
+
 /**
  * This is an example of a basic node.js script that performs
  * the Authorization Code with PKCE oAuth2 flow to authenticate 
@@ -130,42 +132,58 @@ export async function refreshToken() {
 }
 
 export async function getUserData() {
-  const response = await fetch("https://api.spotify.com/v1/me", {
-    method: 'GET',
-    headers: { 'Authorization': 'Bearer ' + currentToken.access_token },
-  });
-
-  return await response.json();
-}
-
-export async function getCurrentUsersPlaylists() {
-    const response = await fetch("https://api.spotify.com/v1/me/playlists?offset=0&limit=20", {
-        method: 'GET',
-        headers: { 'Authorization': 'Bearer ' + currentToken.access_token },
-      });
-    
-      return await response.json();
-}
-
-export async function getPlaylistItems(playlist_id, totalTracksInPlaylist) {
-  try {
-    const response = await fetch(`https://api.spotify.com/v1/playlists/${playlist_id}/tracks?offset=0&limit=${totalTracksInPlaylist}`, {
+  if (isTokenValid()) {
+    const response = await fetch("https://api.spotify.com/v1/me", {
       method: 'GET',
       headers: { 'Authorization': 'Bearer ' + currentToken.access_token },
     });
+  
     return await response.json();
+  } else {
+    console.log('can\'t get user data because user is not logged in!');
+  }
+}
 
-  } catch(err) {
-    console.error('Error getting playlist items' + err);
+export async function getCurrentUsersPlaylists() {
+  if (isTokenValid()) {
+    const response = await fetch("https://api.spotify.com/v1/me/playlists?offset=0&limit=20", {
+      method: 'GET',
+      headers: { 'Authorization': 'Bearer ' + currentToken.access_token },
+    });
+  
+    return await response.json();
+  } else {
+    console.log('can\'t get current users playlist because user is not logged in!');
+  }
+
+}
+
+export async function getPlaylistItems(playlist_id, totalTracksInPlaylist) {
+  if (isTokenValid()) {
+    try {
+      const response = await fetch(`https://api.spotify.com/v1/playlists/${playlist_id}/tracks?offset=0&limit=${totalTracksInPlaylist}`, {
+        method: 'GET',
+        headers: { 'Authorization': 'Bearer ' + currentToken.access_token },
+      });
+      return await response.json();
+  
+    } catch(err) {
+      console.error('Error getting playlist items' + err);
+    }
+  } else {
+    console.log('can\'t get playlist items because user is not logged in!');
   }
 }
 
 // limits Maximin = 50
 export async function getUsersSavedTracks(limit = 50, offset = 0) {
-  const response = await fetch(`https://api.spotify.com/v1/me/tracks?offset=${offset}&limit=${limit}`, {
-    method: 'GET',
-    headers: { 'Authorization': 'Bearer ' + currentToken.access_token },
-  })
-
-  return await response.json();
+  if (isTokenValid()) {
+    const response = await fetch(`https://api.spotify.com/v1/me/tracks?offset=${offset}&limit=${limit}`, {
+      method: 'GET',
+      headers: { 'Authorization': 'Bearer ' + currentToken.access_token },
+    })
+    return await response.json();
+  } else {
+    console.log('can\'t get users saved tracks because user is not logged in!');
+  }
 }

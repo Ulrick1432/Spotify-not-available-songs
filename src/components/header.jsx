@@ -1,8 +1,6 @@
 import { redirectToSpotifyAuthorize } from '../api/authorization_code_pkce';
 const Header = ({ loggedIn }) => {
 
-  console.log(`loggedIn value in header ${loggedIn}`)
-
   const handleClickLogin = async () => {
     if (!loggedIn) {
       await redirectToSpotifyAuthorize();
