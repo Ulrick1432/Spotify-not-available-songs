@@ -23,6 +23,26 @@
   overflow-y: auto;
 }
 
+/* width */
+.items-container::-webkit-scrollbar {
+  width: 16px;
+}
+
+/* Track */
+.items-container::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+
+/* Handle */
+.items-container::-webkit-scrollbar-thumb {
+  background: red;
+  border-radius: 10px;
+}
+
+
 /* Playlist button */
 .button-item {
   box-sizing: border-box;

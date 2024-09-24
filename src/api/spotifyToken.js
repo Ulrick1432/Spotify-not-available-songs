@@ -22,12 +22,12 @@ export const setTokenRefreshTimeout = () => {
   const now = new Date().getTime();
   const expirationTime = new Date(localStorage.getItem('expires')).getTime();
   const timeout = expirationTime - now - 60000; // Refresh 1 minute before expiration
-  console.log(
-    ` setTokenRefreshTimeout is now running:
-    now = ${now} 
-    AND expirationTime = ${expirationTime} 
-    AND timeout = ${timeout}`
-  );
+  // console.log(
+  //   ` setTokenRefreshTimeout is now running:
+  //   now = ${now} 
+  //   AND expirationTime = ${expirationTime} 
+  //   AND timeout = ${timeout}`
+  // );
 
   if (timeout > 0) {
     setTimeout(() => {
