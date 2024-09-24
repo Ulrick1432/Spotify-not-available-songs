@@ -1,35 +1,33 @@
 import './App.css';
 import { useEffect, useState } from 'react';
-import { redirectToSpotifyAuthorize, getCurrentUsersPlaylists, getUserData } from './api/authorization_code_pkce';
-import { setTokenRefreshTimeout } from './api/spotifyToken';
+import { getCurrentUsersPlaylists, getUserData } from './api/authorization_code_pkce';
+import { setTokenRefreshTimeout, isTokenValid } from './api/spotifyToken';
 import ListOfPlaylists from './components/lists_container/listOfPlaylists';
 import ListOfNotAvailableSongs from './components/lists_container/listOfNotAvailableSongs';
+import Header from './components/header';
 
 function App() {
 
-  // localStorage.getItem('code_verifier') returns Null if not exists
-  const [loggedIn, setLoggedIn] = useState(localStorage.getItem('code_verifier'));
+  const [loggedIn, setLoggedIn] = useState(false);
   const [userProfile, setUserProfile] = useState(null);
   const [userPlaylists, setUserPlaylists] = useState([]);
 
-  const handleClickLogin = async () => {
-    if (!loggedIn) {
-      await redirectToSpotifyAuthorize();
+  useEffect(() => {
+    const checkTokenValid = () => {
+      if (isTokenValid()) {
+        setLoggedIn(true);
+        setTokenRefreshTimeout();
+      } else {
+        setLoggedIn(false);
+      }
     }
-  };
-
-  const handleClickLogUd = async () => {
-    if (loggedIn) {
-      localStorage.clear();
-      setLoggedIn(false);
-    }
-  };
+    checkTokenValid();
+  }, []);
 
   useEffect(() => {
     const getUserProfile = async () => {
       if (loggedIn) {
         console.log('Ser ud til at brugeren er logget ind');
-        console.log(localStorage.getItem('code_verifier'));
         const response = await getUserData();
         setUserProfile(response);
       }
@@ -47,23 +45,10 @@ function App() {
     getPlaylists()
   
   }, [loggedIn]);
-
-  useEffect(() => {
-
-    const tokenRefreshTimeout = () => {
-      if (loggedIn) {
-        setTokenRefreshTimeout();
-      }
-    }
-    tokenRefreshTimeout();
-  }, [loggedIn])
   
   return (
     <div className="App">
-      <header className="App-header">
-      {loggedIn === false || loggedIn === null ? <button onClick={ () => handleClickLogin() }>Spotify login</button> :
-      <button onClick={() => handleClickLogUd()}>log ud</button>}
-      </header>
+      <Header loggedIn={loggedIn}></Header>
       <h1>Have you been getting “This track is currently not available in your country”
       If you have a playlist with songs that are no longer available u can find the songs here</h1>
       <div className='lists-container'>
