@@ -4,6 +4,16 @@
   border-radius: 16px;
 }
 
+.container-displayName-logoutButton {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.container-displayName-logoutButton p {
+  align-content: center;
+  margin-top: 40px;
+}
+
 .login-button {
   background-color: var(--main-bg-color);
   color: var(--main-text-color);

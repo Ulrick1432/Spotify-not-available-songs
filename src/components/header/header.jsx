@@ -1,6 +1,15 @@
+import { useEffect, useState } from 'react';
 import { redirectToSpotifyAuthorize } from '../../api/authorization_code_pkce';
 import './header.css';
-const Header = ({ loggedIn, displayName }) => {
+const Header = ({ loggedIn, userProfile }) => {
+  const [displayName, setDisplayName] = useState(null);
+
+  useEffect(() => {
+    if (userProfile) {
+      setDisplayName(userProfile.display_name);
+    }
+  }, [loggedIn, userProfile])
+
 
   const handleClickLogin = async () => {
     if (!loggedIn) {
@@ -20,8 +29,13 @@ const Header = ({ loggedIn, displayName }) => {
         loggedIn === false || loggedIn === null ? 
         <button className='login-button' onClick={() => handleClickLogin() }>Spotify login</button> :
         <>
-          {displayName ? <p>{displayName}</p> : null}
-          <button className='logout-button' onClick={() => handleClickLogUd()}>log ud</button>
+          {displayName ? 
+          <div className='container-displayName-logoutButton'>
+            <p>{displayName}</p> 
+            <button className='logout-button' onClick={() => handleClickLogUd()}>log ud</button>
+          </div>
+          : null}
+          
         </>
       }
       <h1>

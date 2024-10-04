@@ -48,7 +48,7 @@ function App() {
   
   return (
     <div className="App">
-      <Header loggedIn={loggedIn} displayName={userProfile.displayName}></Header>
+      <Header loggedIn={loggedIn} userProfile={userProfile}></Header>
       <div className='lists-container'>
         <ListOfPlaylists headerText={"Your playlists"} data={userPlaylists} loggedIn={loggedIn}/>
         <ListOfNotAvailableSongs headerText={"Not available songs"} loggedIn={loggedIn} />
