@@ -52,13 +52,6 @@ if (code) {
   window.history.replaceState({}, document.title, updatedUrl);
 }
 
-// If we have a token, we're logged in, so fetch user data and render logged in template
-if (currentToken.access_token) {
-  const userData = await getUserData();
-  // renderTemplate("main", "logged-in-template", userData);
-  // renderTemplate("oauth", "oauth-template", currentToken);
-}
-
 // Otherwise we're not logged in, so render the login template
 if (!currentToken.access_token) {
   // renderTemplate("main", "login");
