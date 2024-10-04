@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { redirectToSpotifyAuthorize } from '../../api/authorization_code_pkce';
 import './header.css';
-const Header = ({ loggedIn, userProfile }) => {
+const Header = ({ loggedIn, setLoggedIn, userProfile }) => {
   const [displayName, setDisplayName] = useState(null);
 
   useEffect(() => {
@@ -20,6 +20,7 @@ const Header = ({ loggedIn, userProfile }) => {
   const handleClickLogUd = async () => {
     if (loggedIn) {
       localStorage.clear();
+      setLoggedIn(false);
     }
   };
 
