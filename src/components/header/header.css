@@ -1,0 +1,19 @@
+.App-header {
+  margin-top: 10px;
+  border: 5px solid var(--main-third-coler);
+  border-radius: 16px;
+}
+
+.login-button {
+  background-color: var(--main-bg-color);
+  color: var(--main-text-color);
+}
+
+.logout-button {
+  background-color: var(--main-bg-color);
+  color: var(--main-text-color);
+}
+
+button:hover {
+  background-color: gray;
+}

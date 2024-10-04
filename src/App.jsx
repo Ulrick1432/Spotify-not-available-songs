@@ -4,7 +4,7 @@ import { getCurrentUsersPlaylists, getUserData } from './api/authorization_code_
 import { setTokenRefreshTimeout, isTokenValid } from './api/spotifyToken';
 import ListOfPlaylists from './components/lists_container/listOfPlaylists';
 import ListOfNotAvailableSongs from './components/lists_container/listOfNotAvailableSongs';
-import Header from './components/header';
+import Header from './components/header/header';
 
 function App() {
 
@@ -49,8 +49,6 @@ function App() {
   return (
     <div className="App">
       <Header loggedIn={loggedIn}></Header>
-      <h1>Have you been getting “This track is currently not available in your country”
-      If you have a playlist with songs that are no longer available u can find the songs here</h1>
       <div className='lists-container'>
         <ListOfPlaylists headerText={"Your playlists"} data={userPlaylists} loggedIn={loggedIn}/>
         <ListOfNotAvailableSongs headerText={"Not available songs"} loggedIn={loggedIn} />

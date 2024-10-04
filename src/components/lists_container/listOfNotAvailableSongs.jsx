@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 
 
 const ListOfNotAvailableSongs = ({ headerText, loggedIn }) => {
+  const [tracksHasUpdated, setTracksHasUpdated] = useState(false);
   const [tracks, setTracks] = useState([])
   const [notAvailableSongs, setNotAvailableSongs] = useState([]);
 
@@ -11,6 +12,7 @@ const ListOfNotAvailableSongs = ({ headerText, loggedIn }) => {
 
   // Set tracks only if savedTracks.items exists
   useEffect(() => {
+    setTracksHasUpdated(true);
     if (savedTracks && Array.isArray(savedTracks)) {
       setTracks(savedTracks);
     } else {
@@ -55,8 +57,12 @@ const ListOfNotAvailableSongs = ({ headerText, loggedIn }) => {
           ))
         ) : (
           <>
-            <h1>No unavailable songs</h1>
-            <h1>Select a playlist</h1>
+          {tracksHasUpdated ? <h1>There are not "no available songs" in that playlist</h1> : 
+            <>
+              <h1>No unavailable songs</h1>
+              <h1>Select a playlist</h1>
+            </>
+          }
           </>
         )}
       </div>

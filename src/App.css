@@ -1,6 +1,5 @@
 .App {
   text-align: center;
-  background: #ffffff;
 }
 
 .App-header {
@@ -11,6 +10,8 @@
 .lists-container {
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
 }
 
 button {
@@ -23,8 +24,7 @@ button {
   left: 374px;
   top: 393px;
   
-  background: #FFFFFF;
-  border: 3px solid #1DB954;
+  border: 3px solid var(--main-third-coler);
   border-radius: 16px;
 
   font-family: 'Inter';

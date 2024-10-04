@@ -2,17 +2,22 @@ import './lists.css';
 import { getPlaylistItems, getUsersSavedTracks } from '../../api/authorization_code_pkce';
 import { useDispatch } from 'react-redux';
 import { replaceInitialState } from '../../utils/tracks';
+import { useState } from 'react';
 
 const ListOfPlaylists = ({ headerText, data = null, loggedIn, }) => {
   const dispatch = useDispatch();
+  const [activeButton, setActiveButton] = useState(null);
 
-  const handleClickPlaylists = async (playlist_id, totalTracksInPlaylist) => {
+  const handleClickPlaylists = async (index, playlist_id, totalTracksInPlaylist) => {
     console.log('Jeg har klikket på en playlist');
+    setActiveButton(index);
     const response = await getPlaylistItems(playlist_id, totalTracksInPlaylist);
     dispatch(replaceInitialState(response.items));
   };
 
   const handleClickLikedSongs = async () => {
+    setActiveButton('liked-songs'); // Special key for Liked Songs button
+    
     let totalLikedSongs = 0
     let totalLikedSongsLeft = 0
     let tracksToKeepTrackOf = []
@@ -63,21 +68,30 @@ const ListOfPlaylists = ({ headerText, data = null, loggedIn, }) => {
     <div className='container'>
       <h2 className='header-text'>{headerText}</h2>
       <div className='items-container'>
-        {loggedIn ? <button className='button-item' onClick={() => handleClickLikedSongs()}>Liked songs</button> : null}
+        {loggedIn ? 
+          <button 
+            className={`button-item ${activeButton === 'liked-songs' ? 'active' : ''}`}
+            onClick={() => handleClickLikedSongs()}
+          >
+            Liked songs
+          </button> : 
+        null}
         {data && Array.isArray(data.items) && data.items.length > 0 ? (
           data.items.map((playlist, index) => (
             <button 
               key={index} 
-              className='button-item' 
-              onClick={() => handleClickPlaylists(playlist.id, playlist.tracks.total)}
+              className={`button-item ${activeButton === index ? 'active' : ''}`}
+              onClick={() => handleClickPlaylists(index, playlist.id, playlist.tracks.total)}
             >
               {playlist.name}
             </button>
           ))
         ) : (
           <>
-            <h1>No playlists available</h1>
+          {headerText === "Your playlists" ? 
+            <h1>No playlists available</h1> : 
             <h1>Login to get spotify playlists</h1>
+          }
           </>
         )}
       </div>
