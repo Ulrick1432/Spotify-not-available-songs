@@ -10,7 +10,8 @@ import { isTokenValid } from "./spotifyToken";
  */
 
 const clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID; // your clientId
-const redirectUrl = 'http://localhost:3000/';        // your redirect URL - must be localhost URL and/or HTTPS
+const redirectUrl = process.env.REACT_APP_SPOTIFY_LOGIN_REDICRECT ?   
+  process.env.REACT_APP_SPOTIFY_LOGIN_REDICRECT : 'https://spotify-not-available-songs.netlify.app/';        // your redirect URL - must be localhost URL and/or HTTPS
 
 const authorizationEndpoint = "https://accounts.spotify.com/authorize";
 const tokenEndpoint = "https://accounts.spotify.com/api/token";
