@@ -1,6 +1,6 @@
 import { redirectToSpotifyAuthorize } from '../../api/authorization_code_pkce';
 import './header.css';
-const Header = ({ loggedIn }) => {
+const Header = ({ loggedIn, displayName }) => {
 
   const handleClickLogin = async () => {
     if (!loggedIn) {
@@ -19,7 +19,10 @@ const Header = ({ loggedIn }) => {
       {
         loggedIn === false || loggedIn === null ? 
         <button className='login-button' onClick={() => handleClickLogin() }>Spotify login</button> :
-        <button className='logout-button' onClick={() => handleClickLogUd()}>log ud</button>
+        <>
+          {displayName ? <p>{displayName}</p> : null}
+          <button className='logout-button' onClick={() => handleClickLogUd()}>log ud</button>
+        </>
       }
       <h1>
         Have you been getting “This track is currently not available in your country”

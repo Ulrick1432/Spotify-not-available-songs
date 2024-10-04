@@ -37,8 +37,6 @@ const ListOfNotAvailableSongs = ({ headerText, loggedIn }) => {
       };
   
       checkTracksAvailability();
-    } else if (loggedIn) {
-      console.log('Tracks array is empty, skipping availability check.');
     }
   }, [tracks]);
 
