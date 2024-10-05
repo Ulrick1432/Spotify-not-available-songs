@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { redirectToSpotifyAuthorize } from '../../api/authorization_code_pkce';
 import './header.css';
-const Header = ({ loggedIn, setLoggedIn, userProfile }) => {
+const Header = ({ loggedIn, setLoggedIn, setUserPlaylists, userProfile }) => {
   const [displayName, setDisplayName] = useState(null);
 
   useEffect(() => {
@@ -21,6 +21,7 @@ const Header = ({ loggedIn, setLoggedIn, userProfile }) => {
     if (loggedIn) {
       localStorage.clear();
       setLoggedIn(false);
+      setUserPlaylists([]);
     }
   };
 

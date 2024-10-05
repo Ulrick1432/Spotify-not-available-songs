@@ -55,7 +55,7 @@ const ListOfNotAvailableSongs = ({ headerText, loggedIn }) => {
           ))
         ) : (
           <>
-          {tracksHasUpdated ? <h1>There are not "no available songs" in that playlist</h1> : 
+          {tracksHasUpdated && loggedIn ? <h1>There are not "no available songs" in that playlist</h1> : 
             <>
               <h1>No unavailable songs</h1>
               <h1>Select a playlist</h1>
