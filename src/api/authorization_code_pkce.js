@@ -11,6 +11,7 @@ import { isTokenValid } from "./spotifyToken";
 
 const clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID; // your clientId
 const redirectUrl = process.env.REACT_APP_SPOTIFY_LOGIN_REDICRECT // your redirect URL - must be localhost URL and/or HTTPS
+console.log("This is the spotify redirectUrl = " + redirectUrl);
 
 const authorizationEndpoint = "https://accounts.spotify.com/authorize";
 const tokenEndpoint = "https://accounts.spotify.com/api/token";
