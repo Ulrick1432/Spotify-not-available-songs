@@ -1,29 +1,31 @@
+/* Header styles */
 .App-header {
   margin-top: 10px;
   border: 5px solid var(--main-third-coler);
   border-radius: 16px;
+  padding: 20px;
 }
 
 .container-displayName-logoutButton {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .container-displayName-logoutButton p {
-  align-content: center;
-  margin-top: 40px;
+  margin: 0;
+  align-self: center;
 }
 
-.login-button {
+.login-button, .logout-button {
   background-color: var(--main-bg-color);
   color: var(--main-text-color);
-}
-
-.logout-button {
-  background-color: var(--main-bg-color);
-  color: var(--main-text-color);
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 8px;
 }
 
 button:hover {
   background-color: gray;
+  cursor: pointer;
 }

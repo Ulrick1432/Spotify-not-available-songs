@@ -1,36 +1,5 @@
+/* Base App styles */
 .App {
   text-align: center;
-}
-
-.App-header {
-  margin-left: 15%;
-  margin-right: 15%;
-}
-
-.lists-container {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-}
-
-button {
-  box-sizing: border-box;
-  margin-top: 20px;
-  cursor: pointer;
-
-  width: 357px;
-  height: 58px;
-  left: 374px;
-  top: 393px;
-  
-  border: 3px solid var(--main-third-coler);
-  border-radius: 16px;
-
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 600;
-  font-size: 30px;
-  line-height: 36px;
-  text-align: center;
+  padding: 0 5%;
 }

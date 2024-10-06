@@ -1,80 +1,105 @@
-/* Your Playlists container */
+/* Lists container - Flexbox for responsiveness */
+.lists-container {
+  display: flex;
+  justify-content: space-around;
+  align-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px 0;
+}
+
+/* Container styles */
 .container {
   border: 5px solid var(--main-third-coler);
   border-radius: 16px;
-  margin: 32px 0px 32px 0px;
+  margin: 32px 0;
+  width: 100%;
+  max-width: 450px;
 }
+
 .container h2 {
-  border-bottom: 5px solid var(--main-third-coler);;
+  border-bottom: 5px solid var(--main-third-coler);
   border-radius: 16px;
-  margin: 0px;
+  margin: 0 0 10px;
 }
 
-/* List of playlists container */
+/* Items container with scroll - fix horizontal scroll */
 .items-container {
-  width: 418px;
-  height: 676px;
-  left: 344px;
-  top: 216px;
-  margin-bottom: 20px;
-  
-  /* Hide overflow and add scrollbar */
+  width: 100%;
+  padding: 0px 10px 0px 10px;
+  max-height: 400px;
   overflow-y: auto;
+  overflow-x: hidden; /* Hide horizontal scroll */
+  margin-bottom: 10px;
+  box-sizing: border-box; /* Ensure padding and border are included in the width */
 }
 
-/* width */
 .items-container::-webkit-scrollbar {
-  width: 16px;
+  width: 10px;
 }
 
-/* Track */
-.items-container::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px grey;
-  border-radius: 10px;
-  margin-top: 3px;
-  margin-bottom: 3px;
-}
-
-/* Handle */
 .items-container::-webkit-scrollbar-thumb {
   background: var(--main-third-coler);
   border-radius: 10px;
-  margin-left: 5px;
 }
 
-
-/* Playlist button */
+/* Button item styles - make sure it doesn't exceed the container's width */
 .button-item {
   color: var(--main-text-color);
-  box-sizing: border-box;
-  margin-top: 20px;
-
-  width: 357px;
-  height: 58px;
-  left: 374px;
-  top: 393px;
-  
-  background: var(--main-bg-color);
+  background-color: var(--main-bg-color);
   border: 3px solid var(--main-third-coler);
   border-radius: 16px;
-
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 600;
-  font-size: 30px;
-  line-height: 36px;
-  text-align: center;
-
-  /* Handle text overflow */
+  width: calc(100% - 10px); /* Ensure button width fits within container */
+  padding: 10px;
+  font-size: 1.1rem;
+  margin-top: 10px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  box-sizing: border-box; /* Include padding/border in width */
 }
 
-.button-item:hover {
-  background-color: gray;
-}
-.button-item.active {
+.button-item:hover, .button-item.active {
   background-color: gray;
   color: white;
+}
+
+.button-item.not-available-songs:hover, .button-item.not-available-songs:active {
+  cursor: default;
+  background-color: var(--main-bg-color);
+  user-select: text; /* Allow text selection */
+}
+
+/* Responsive Media Queries */
+@media (max-width: 768px) {
+  .lists-container {
+    flex-direction: column;
+  }
+
+  .App-header h1 {
+    font-size: 1.2rem;
+  }
+
+  .button-item {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .App {
+    padding: 0 2%;
+  }
+
+  .App-header h1 {
+    font-size: 1rem;
+  }
+
+  .button-item {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .items-container {
+    max-height: 300px;
+  }
 }

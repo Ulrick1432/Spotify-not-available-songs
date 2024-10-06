@@ -48,7 +48,7 @@ const ListOfNotAvailableSongs = ({ headerText, loggedIn }) => {
           notAvailableSongs.map((trackName, index) => (
             <button
               key={index}
-              className='button-item'
+              className='button-item not-available-songs'
             >
               {trackName}
             </button>
