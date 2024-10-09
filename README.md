@@ -1,3 +1,7 @@
+
+---------------------- BUG i "Get Playlist Items" API hos spotify -----------------------
+
+https://community.spotify.com/t5/Spotify-for-Developers/Get-playlist-items-documented-limit-is-incorrect/m-p/5619233#M10225
 Nedenstående virker ikke 
 
 Dine favoritsange i 2022 → https://api.spotify.com/v1/playlists/6ia3xAedpsBYjfdaGJ4Icz/tracks?offset=0&limit=595
