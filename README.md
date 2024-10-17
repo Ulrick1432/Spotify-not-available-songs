@@ -30,7 +30,7 @@ ER DET VIRKELIG MENINGEN OG HVOR STÅR DET I DERES DOKUMENTATION=????
 Når der klikkes på et at playlisterne skal den gå i gennem alle "Songs" og retuner i anden liste
 Hvilke song der ikke længere er tilgænge lig i users region. 
 
-Hvordan gøre dette? 
+Hvordan gøres dette? 
 https://developer.spotify.com/documentation/web-api/reference/get-playlists-tracks
 
 response af overnstående for at se, hvilke lande sangen er tilgængelig i. 

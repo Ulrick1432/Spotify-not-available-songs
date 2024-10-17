@@ -5,12 +5,15 @@ import { setTokenRefreshTimeout, isTokenValid } from './api/spotifyToken';
 import ListOfPlaylists from './components/lists_container/listOfPlaylists';
 import ListOfNotAvailableSongs from './components/lists_container/listOfNotAvailableSongs';
 import Header from './components/header/header';
+import LoadingSpinner from './components/loadingSpinner/loadingSpinner';
 
 function App() {
 
   const [loggedIn, setLoggedIn] = useState(false);
   const [userProfile, setUserProfile] = useState(null);
   const [userPlaylists, setUserPlaylists] = useState([]);
+  const [loading, setLoading] = useState(false);
+  console.log(`Loading = ${loading}`);
 
   useEffect(() => {
     const checkTokenValid = () => {
@@ -20,47 +23,66 @@ function App() {
       } else {
         setLoggedIn(false);
       }
-    }
+    };
     checkTokenValid();
   }, []);
 
   useEffect(() => {
     const getUserProfile = async () => {
       if (loggedIn) {
-        console.log('Ser ud til at brugeren er logget ind');
-        const response = await getUserData();
-        setUserProfile(response);
+        setLoading(true);
+        try {
+          console.log('Fetching user profile...');
+          const response = await getUserData();
+          setUserProfile(response);
+        } catch (error) {
+          console.error('Error fetching user profile:', error);
+        } finally {
+          setLoading(false); // Ensure loading is stopped even in case of an error
+        }
       }
-    }
+    };
     getUserProfile();
   }, [loggedIn]);
 
   useEffect(() => {
     const getPlaylists = async () => {
       if (loggedIn) {
-        const response = await getCurrentUsersPlaylists();
-        setUserPlaylists(response);
+        setLoading(true);
+        try {
+          console.log('Fetching playlists...');
+          const response = await getCurrentUsersPlaylists();
+          setUserPlaylists(response);
+        } catch (error) {
+          console.error('Error fetching playlists:', error);
+        } finally {
+          setLoading(false); // Stop loading when the request is complete or fails
+        }
       }
-    }
-    getPlaylists()
-  
+    };
+    getPlaylists();
   }, [loggedIn]);
   
   return (
     <div className="App">
-      <Header 
-        loggedIn={loggedIn} 
-        setLoggedIn={setLoggedIn} 
-        setUserPlaylists={setUserPlaylists} 
-        userProfile={userProfile}
-      />  
-      <div className='lists-container'>
-        <ListOfPlaylists headerText={"Your playlists"} data={userPlaylists} loggedIn={loggedIn}/>
-        <ListOfNotAvailableSongs headerText={"Not available songs"} loggedIn={loggedIn} />
-      </div>
-      <footer></footer>
+      {loading ? <LoadingSpinner /> :
+      <>
+        <Header 
+          loggedIn={loggedIn} 
+          setLoggedIn={setLoggedIn} 
+          setUserPlaylists={setUserPlaylists} 
+          userProfile={userProfile}
+        />  
+        <div className='lists-container'>
+          <ListOfPlaylists headerText={"Your playlists"} data={userPlaylists} loggedIn={loggedIn}/>
+          <ListOfNotAvailableSongs headerText={"Not available songs"} loggedIn={loggedIn} />
+        </div>
+        <footer></footer>
+      </>
+      }
     </div>
   );
 }
 
 export default App;
+

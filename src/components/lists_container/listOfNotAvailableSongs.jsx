@@ -16,7 +16,7 @@ const ListOfNotAvailableSongs = ({ headerText, loggedIn }) => {
     if (savedTracks && Array.isArray(savedTracks)) {
       setTracks(savedTracks);
     } else {
-      console.warn('savedTracks.items is undefined or not an array');
+      setTracks([]);
     }
   }, [savedTracks]);
   

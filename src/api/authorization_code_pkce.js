@@ -140,7 +140,7 @@ export async function getUserData() {
 
 export async function getCurrentUsersPlaylists() {
   if (isTokenValid()) {
-    const response = await fetch("https://api.spotify.com/v1/me/playlists?offset=0&limit=20", {
+    const response = await fetch("https://api.spotify.com/v1/me/playlists?offset=0&limit=50", {
       method: 'GET',
       headers: { 'Authorization': 'Bearer ' + currentToken.access_token },
     });
@@ -152,15 +152,17 @@ export async function getCurrentUsersPlaylists() {
 
 }
 
-export async function getPlaylistItems(playlist_id, totalTracksInPlaylist) {
+export async function getPlaylistItems(playlist_id, limit = 50, offset = 0) {
+  console.log(`https://api.spotify.com/v1/playlists/${playlist_id}/tracks?offset=${offset}&limit=${limit}`)
   if (isTokenValid()) {
     try {
-      const response = await fetch(`https://api.spotify.com/v1/playlists/${playlist_id}/tracks?offset=0&limit=${totalTracksInPlaylist}`, {
+      const response = await fetch(`https://api.spotify.com/v1/playlists/${playlist_id}/tracks?offset=${offset}&limit=${limit}`, {
         method: 'GET',
         headers: { 'Authorization': 'Bearer ' + currentToken.access_token },
       });
-      return await response.json();
-  
+      if (response.ok) {
+        return await response.json();
+      } 
     } catch(err) {
       console.error('Error getting playlist items' + err);
     }
