@@ -4,11 +4,12 @@ import { useDispatch } from 'react-redux';
 import { replaceInitialState } from '../../utils/tracks';
 import { useState } from 'react';
 
-const ListOfPlaylists = ({ headerText, data = null, loggedIn, loadingListOfPlaylists}) => {
+const ListOfPlaylists = ({ headerText, data = null, loggedIn, setLoadingListOfNotAvailableSongs}) => {
   const dispatch = useDispatch();
   const [activeButton, setActiveButton] = useState(null);
 
   const handleClickPlaylists = async (index, playlist_id, totalTracksInPlaylist) => {
+    setLoadingListOfNotAvailableSongs(true);
     console.log(`Jeg har klikket på en playlist & playlist_id = ${playlist_id} totalTracksInPlaylist${totalTracksInPlaylist}`);
     setActiveButton(index);
     try {
@@ -66,56 +67,66 @@ const ListOfPlaylists = ({ headerText, data = null, loggedIn, loadingListOfPlayl
       
     } catch(err) {
       console.error('error getting playlist items from API');
+    } finally {
+      setLoadingListOfNotAvailableSongs(false);
     }
   };
 
   const handleClickLikedSongs = async () => {
+    setLoadingListOfNotAvailableSongs(true);
     setActiveButton('liked-songs'); // Special key for Liked Songs button
     
-    let totalLikedSongs = 0
-    let totalLikedSongsLeft = 0
-    let tracksToKeepTrackOf = []
-    let offset = 0
-    let limit = 50
-    console.log('Jeg har klikket på liked Songs playlist');
+    try {
+      let totalLikedSongs = 0
+      let totalLikedSongsLeft = 0
+      let tracksToKeepTrackOf = []
+      let offset = 0
+      let limit = 50
+      console.log('Jeg har klikket på liked Songs playlist');
+  
+      // While total amount of songs in liked- / saved tracks playlist is not equal the amount of track returned
+      // Loops through ones without checking conditions
+      do {
+        console.log(`
+          TotalLikedSongs = ${totalLikedSongs}
+          TotalLikedSongsLeft = ${totalLikedSongsLeft}
+          offset = ${offset}
+          limit = ${limit}`
+        )
+  
+        const response = await getUsersSavedTracks(limit, offset);
+        // Sets totalLikedSongs equal to the total amount of tracks/songs in the liked playlist
+        totalLikedSongs = response.total;
+  
+        // Push each track/song to the tracksToKeepTrackOf array
+        for (let index = 0; index < response.items.length; index++) {
+          const item = response.items[index];
+          tracksToKeepTrackOf.push(item);
+        }
+  
+        offset += limit;
+        totalLikedSongsLeft = totalLikedSongs - offset;
+  
+        // if there is less than 50 songs/tracks left it
+        // changes the limit of amount of songs to how many tracks there are left to request.
+        if (totalLikedSongsLeft < 50) {
+          limit = totalLikedSongsLeft;
+        }
+        
+        if (totalLikedSongsLeft <= 0) {
+          console.log('All liked songs have been processed.');
+          break;
+        }
+        
+      } while (totalLikedSongs !== offset);
+  
+      dispatch(replaceInitialState(tracksToKeepTrackOf));
+    } catch(err) {
+      console.error('error getting playlist items from API');
+    } finally {
+      setLoadingListOfNotAvailableSongs(false);
+    }
 
-    // While total amount of songs in liked- / saved tracks playlist is not equal the amount of track returned
-    // Loops through ones without checking conditions
-    do {
-      console.log(`
-        TotalLikedSongs = ${totalLikedSongs}
-        TotalLikedSongsLeft = ${totalLikedSongsLeft}
-        offset = ${offset}
-        limit = ${limit}`
-      )
-
-      const response = await getUsersSavedTracks(limit, offset);
-      // Sets totalLikedSongs equal to the total amount of tracks/songs in the liked playlist
-      totalLikedSongs = response.total;
-
-      // Push each track/song to the tracksToKeepTrackOf array
-      for (let index = 0; index < response.items.length; index++) {
-        const item = response.items[index];
-        tracksToKeepTrackOf.push(item);
-      }
-
-      offset += limit;
-      totalLikedSongsLeft = totalLikedSongs - offset;
-
-      // if there is less than 50 songs/tracks left it
-      // changes the limit of amount of songs to how many tracks there are left to request.
-      if (totalLikedSongsLeft < 50) {
-        limit = totalLikedSongsLeft;
-      }
-      
-      if (totalLikedSongsLeft <= 0) {
-        console.log('All liked songs have been processed.');
-        break;
-      }
-      
-    } while (totalLikedSongs !== offset);
-
-    dispatch(replaceInitialState(tracksToKeepTrackOf));
   };
   
   return (

@@ -13,6 +13,7 @@ function App() {
   const [userProfile, setUserProfile] = useState(null);
   const [userPlaylists, setUserPlaylists] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [loadingListOfNotAvailableSongs, setLoadingListOfNotAvailableSongs] = useState(false);
   console.log(`Loading = ${loading}`);
 
   useEffect(() => {
@@ -74,8 +75,8 @@ function App() {
           userProfile={userProfile}
         />  
         <div className='lists-container'>
-          <ListOfPlaylists headerText={"Your playlists"} data={userPlaylists} loggedIn={loggedIn}/>
-          <ListOfNotAvailableSongs headerText={"Not available songs"} loggedIn={loggedIn} />
+          <ListOfPlaylists headerText={"Your playlists"} data={userPlaylists} loggedIn={loggedIn} setLoadingListOfNotAvailableSongs={setLoadingListOfNotAvailableSongs}/>
+          <ListOfNotAvailableSongs headerText={"Not available songs"} loggedIn={loggedIn} loadingListOfNotAvailableSongs={loadingListOfNotAvailableSongs}/>
         </div>
         <footer></footer>
       </>

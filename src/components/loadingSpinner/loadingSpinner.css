@@ -2,12 +2,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Full height of the viewport */
+  height: 85%;
+  width: 100%;
 }
 
 .loading-spinner {
-  border: 16px solid #f3f3f3; /* Light gray */
-  border-top: 16px solid #3498db; /* Blue */
+  border: 16px solid var(--main-text-color); /* White */
+  border-top: 16px solid var(--main-third-coler); /* Green */
   border-radius: 50%;
   width: 120px;
   height: 120px;
