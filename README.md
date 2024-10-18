@@ -1,3 +1,10 @@
+-------------------------------------------TODO------------------------------------------
+* Gør så loading spinner har sort baggrund og grøn "loading"
+* Tilføj en tekst der kommer frem i Songs not available når der klikkes på en playlist der har mere end 100 tracks.
+  - Teksten kan fx være "Der er en bug i Spotify public API - som gør at det ikke er muligt at få tracks fra playlists der har flere end 100 sange"
+* Tilføj en footer component
+  - Hvad skal der stå???
+
 
 ---------------------- BUG i "Get Playlist Items" API hos spotify -----------------------
 
