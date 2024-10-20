@@ -7,7 +7,7 @@
 }
 
 .loading-spinner {
-  border: 16px solid var(--main-text-color); /* White */
+  border: 16px solid var(--main-bg-color); /* Black */
   border-top: 16px solid var(--main-third-coler); /* Green */
   border-radius: 50%;
   width: 120px;
