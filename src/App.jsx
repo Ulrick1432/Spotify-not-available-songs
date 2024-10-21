@@ -14,6 +14,7 @@ function App() {
   const [userPlaylists, setUserPlaylists] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingListOfNotAvailableSongs, setLoadingListOfNotAvailableSongs] = useState(false);
+  const [tooManyTracksInPlaylist, setTooManyTracksInPlaylist] = useState(false);
   console.log(`Loading = ${loading}`);
 
   useEffect(() => {
@@ -75,8 +76,8 @@ function App() {
           userProfile={userProfile}
         />  
         <div className='lists-container'>
-          <ListOfPlaylists headerText={"Your playlists"} data={userPlaylists} loggedIn={loggedIn} setLoadingListOfNotAvailableSongs={setLoadingListOfNotAvailableSongs}/>
-          <ListOfNotAvailableSongs headerText={"Not available songs"} loggedIn={loggedIn} loadingListOfNotAvailableSongs={loadingListOfNotAvailableSongs}/>
+          <ListOfPlaylists headerText={"Your playlists"} data={userPlaylists} loggedIn={loggedIn} setLoadingListOfNotAvailableSongs={setLoadingListOfNotAvailableSongs} setTooManyTracksInPlaylist={setTooManyTracksInPlaylist}/>
+          <ListOfNotAvailableSongs headerText={"Not available songs"} loggedIn={loggedIn} loadingListOfNotAvailableSongs={loadingListOfNotAvailableSongs} tooManyTracksInPlaylist={tooManyTracksInPlaylist}/>
         </div>
         <footer></footer>
       </>

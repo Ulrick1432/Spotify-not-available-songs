@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import LoadingSpinner from '../loadingSpinner/loadingSpinner';
 
 
-const ListOfNotAvailableSongs = ({ headerText, loggedIn, loadingListOfNotAvailableSongs }) => {
+const ListOfNotAvailableSongs = ({ headerText, loggedIn, loadingListOfNotAvailableSongs, tooManyTracksInPlaylist }) => {
   const [tracksHasUpdated, setTracksHasUpdated] = useState(false);
   const [tracks, setTracks] = useState([])
   const [notAvailableSongs, setNotAvailableSongs] = useState([]);
@@ -50,7 +50,9 @@ const ListOfNotAvailableSongs = ({ headerText, loggedIn, loadingListOfNotAvailab
       <h2 className='header-text'>{headerText}</h2>
       {loading || loadingListOfNotAvailableSongs ? <LoadingSpinner className='loading-spinner'/> : 
         <div className='items-container'>
-          {Array.isArray(notAvailableSongs) && notAvailableSongs.length > 0 && loggedIn ? 
+          {tooManyTracksInPlaylist ? (
+            <h3>The playlist has more than 100 tracks/songs. Soitify API can't handle that because of bug.</h3>
+          ) : Array.isArray(notAvailableSongs) && notAvailableSongs.length > 0 && loggedIn ? 
             (
               notAvailableSongs.map((trackName, index) => (
                 <button
@@ -64,10 +66,12 @@ const ListOfNotAvailableSongs = ({ headerText, loggedIn, loadingListOfNotAvailab
             (
               <>
               {tracksHasUpdated && loggedIn ? <h1>There are not "no available songs" in that playlist</h1> : 
+              (
                 <>
                   <h1>No unavailable songs</h1>
                   <h1>Select a playlist</h1>
                 </>
+              )
               }
               </>
             )
@@ -76,7 +80,6 @@ const ListOfNotAvailableSongs = ({ headerText, loggedIn, loadingListOfNotAvailab
       }
     </div>
   )
-
 }
 
 export default ListOfNotAvailableSongs;
