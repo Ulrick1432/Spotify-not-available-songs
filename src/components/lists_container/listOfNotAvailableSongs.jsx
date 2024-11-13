@@ -51,7 +51,7 @@ const ListOfNotAvailableSongs = forwardRef((props, ref) => {
       {loading || props.loadingListOfNotAvailableSongs ? <LoadingSpinner className='loading-spinner'/> : 
         <div className='items-container'>
           {props.tooManyTracksInPlaylist ? (
-            <h3>The playlist has more than 100 tracks/songs. Soitify API can't handle that because of bug.</h3>
+            <h3>The playlist has more than 100 tracks/songs. Spotify API can't handle that because of bug.</h3>
           ) : Array.isArray(notAvailableSongs) && notAvailableSongs.length > 0 && props.loggedIn ? 
             (
               notAvailableSongs.map((trackName, index) => (
