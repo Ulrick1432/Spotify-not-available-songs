@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { replaceInitialState } from '../../utils/tracks';
 import { useState } from 'react';
 
-const ListOfPlaylists = ({ headerText, data = null, loggedIn, setLoadingListOfNotAvailableSongs, setTooManyTracksInPlaylist}) => {
+const ListOfPlaylists = ({ headerText, data = null, loggedIn, setLoadingListOfNotAvailableSongs, setTooManyTracksInPlaylist, onClickScroll}) => {
   const dispatch = useDispatch();
   const [activeButton, setActiveButton] = useState(null);
 
@@ -145,7 +145,7 @@ const ListOfPlaylists = ({ headerText, data = null, loggedIn, setLoadingListOfNo
         {loggedIn ? 
           <button 
             className={`button-item ${activeButton === 'liked-songs' ? 'active' : ''}`}
-            onClick={() => handleClickLikedSongs()}
+            onClick={() => {handleClickLikedSongs(); onClickScroll()}}
           >
             Liked songs
           </button> : 
@@ -155,7 +155,7 @@ const ListOfPlaylists = ({ headerText, data = null, loggedIn, setLoadingListOfNo
             <button 
               key={index} 
               className={`button-item ${activeButton === index ? 'active' : ''}`}
-              onClick={() => handleClickPlaylists(index, playlist.id, playlist.tracks.total)}
+              onClick={() => {handleClickPlaylists(index, playlist.id, playlist.tracks.total); onClickScroll()}}
             >
               {playlist.name}
             </button>

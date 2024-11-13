@@ -1,5 +1,5 @@
 import './App.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { getCurrentUsersPlaylists, getUserData } from './api/authorization_code_pkce';
 import { setTokenRefreshTimeout, isTokenValid } from './api/spotifyToken';
 import ListOfPlaylists from './components/lists_container/listOfPlaylists';
@@ -15,6 +15,8 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [loadingListOfNotAvailableSongs, setLoadingListOfNotAvailableSongs] = useState(false);
   const [tooManyTracksInPlaylist, setTooManyTracksInPlaylist] = useState(false);
+  const targetElementRef = useRef(null);
+
   console.log(`Loading = ${loading}`);
 
   useEffect(() => {
@@ -64,6 +66,14 @@ function App() {
     };
     getPlaylists();
   }, [loggedIn]);
+
+  // Scroll to ListOfNotAvailableSongs
+  const scollToListOfNotAvailableSongs = () => {
+    if (targetElementRef.current) {
+      targetElementRef.current.scrollIntoView({ behavior: 'smooth', block: 'start'});
+    }
+  };
+
   
   return (
     <div className="App">
@@ -82,12 +92,14 @@ function App() {
             loggedIn={loggedIn} 
             setLoadingListOfNotAvailableSongs={setLoadingListOfNotAvailableSongs}
             setTooManyTracksInPlaylist={setTooManyTracksInPlaylist}
+            onClickScroll={scollToListOfNotAvailableSongs}
           />
           <ListOfNotAvailableSongs 
             headerText={"Not available songs"} 
             loggedIn={loggedIn} 
             loadingListOfNotAvailableSongs={loadingListOfNotAvailableSongs} 
             tooManyTracksInPlaylist={tooManyTracksInPlaylist}
+            ref={targetElementRef}
           />
         </div>
         <footer></footer>

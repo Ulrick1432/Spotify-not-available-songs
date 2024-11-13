@@ -1,10 +1,10 @@
 import { useSelector } from 'react-redux';
 import './lists.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, forwardRef } from 'react';
 import LoadingSpinner from '../loadingSpinner/loadingSpinner';
 
 
-const ListOfNotAvailableSongs = ({ headerText, loggedIn, loadingListOfNotAvailableSongs, tooManyTracksInPlaylist }) => {
+const ListOfNotAvailableSongs = forwardRef((props, ref) => {
   const [tracksHasUpdated, setTracksHasUpdated] = useState(false);
   const [tracks, setTracks] = useState([])
   const [notAvailableSongs, setNotAvailableSongs] = useState([]);
@@ -46,13 +46,13 @@ const ListOfNotAvailableSongs = ({ headerText, loggedIn, loadingListOfNotAvailab
   }, [tracks]);
 
   return (
-    <div className='container'>
-      <h2 className='header-text'>{headerText}</h2>
-      {loading || loadingListOfNotAvailableSongs ? <LoadingSpinner className='loading-spinner'/> : 
+    <div ref={ref} className='container'>
+      <h2 className='header-text'>{props.headerText}</h2>
+      {loading || props.loadingListOfNotAvailableSongs ? <LoadingSpinner className='loading-spinner'/> : 
         <div className='items-container'>
-          {tooManyTracksInPlaylist ? (
+          {props.tooManyTracksInPlaylist ? (
             <h3>The playlist has more than 100 tracks/songs. Soitify API can't handle that because of bug.</h3>
-          ) : Array.isArray(notAvailableSongs) && notAvailableSongs.length > 0 && loggedIn ? 
+          ) : Array.isArray(notAvailableSongs) && notAvailableSongs.length > 0 && props.loggedIn ? 
             (
               notAvailableSongs.map((trackName, index) => (
                 <button
@@ -65,7 +65,7 @@ const ListOfNotAvailableSongs = ({ headerText, loggedIn, loadingListOfNotAvailab
             ) : 
             (
               <>
-              {tracksHasUpdated && loggedIn ? <h1>There are not "no available songs" in that playlist</h1> : 
+              {tracksHasUpdated && props.loggedIn ? <h1>There are not "no available songs" in that playlist</h1> : 
               (
                 <>
                   <h1>No unavailable songs</h1>
@@ -80,6 +80,6 @@ const ListOfNotAvailableSongs = ({ headerText, loggedIn, loadingListOfNotAvailab
       }
     </div>
   )
-}
+})
 
 export default ListOfNotAvailableSongs;
